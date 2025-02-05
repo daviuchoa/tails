@@ -1,0 +1,30 @@
+# Exported from Render on 2025-02-05T16:23:13Z
+databases:
+- name: tails
+  databaseName: tails_5omy
+  user: tails
+  plan: free
+  region: oregon
+  ipAllowList:
+  - source: 0.0.0.0/0
+    description: everywhere
+  postgresMajorVersion: "16"
+services:
+- type: web
+  name: tails
+  runtime: docker
+  repo: https://github.com/daviuchoa/tails
+  plan: free
+  envVars:
+  - key: DB_URL
+    fromDatabase:
+      name: tails
+      property: connectionString
+  - key: DB_CONNECTION
+    sync: false
+  - key: APP_KEY
+    sync: false
+  region: oregon
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+version: "1"
